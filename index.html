@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anoop KR — Actor</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #F5A623;
+  --orange-dim: #c98a1a;
+  --black: #080808;
+  --dark: #0f0f0f;
+  --dark2: #141414;
+  --dark3: #1a1a1a;
+  --white: #f2ede6;
+  --offwhite: #c8c3bc;
+  --gray: #666;
+  --line: rgba(255,255,255,0.07);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--black); color:var(--white); font-family:'Barlow',sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
+
+/* CURSOR */
+#cur { width:8px; height:8px; background:var(--orange); border-radius:50%; position:fixed; z-index:9999; pointer-events:none; transform:translate(-50%,-50%); }
+#cur-ring { width:30px; height:30px; border:1px solid var(--orange); border-radius:50%; position:fixed; z-index:9998; pointer-events:none; transform:translate(-50%,-50%); opacity:.5; transition:all .12s linear; }
+
+/* ─── NAV ─── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.3rem 4rem;
+  background:rgba(8,8,8,0); /* starts transparent */
+  backdrop-filter:blur(0px);
+  transition:background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom:1px solid transparent;
+}
+nav.scrolled {
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(14px);
+  border-bottom-color:var(--line);
+}
+.nav-brand { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.2rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--orange); text-decoration:none; }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { color:var(--white); text-decoration:none; font-size:0.78rem; font-weight:400; letter-spacing:0.12em; text-transform:uppercase; transition:color .2s; }
+.nav-links a:hover { color:var(--orange); }
+.nav-ig {
+  display:flex; align-items:center; gap:0.5rem;
+  text-decoration:none; color:var(--offwhite);
+  font-size:0.75rem; letter-spacing:0.1em;
+  text-transform:uppercase; transition:color .2s;
+  border:1px solid rgba(255,255,255,0.15);
+  padding:0.4rem 1rem;
+}
+.nav-ig:hover { color:var(--orange); border-color:var(--orange); }
+.nav-ig svg { width:14px; height:14px; fill:currentColor; }
+
+/* ─── HERO — VIDEO BG ─── */
+.hero {
+  position:relative; height:100vh; overflow:hidden;
+  display:flex; align-items:flex-end;
+}
+.hero-video-bg {
+  position:absolute; inset:0; z-index:0;
+}
+.hero-video-bg video {
+  width:100%; height:100%;
+  object-fit:cover; object-position:center;
+  filter:brightness(0.45) saturate(0.6);
+}
+/* dark overlays */
+.hero-overlay-bottom {
+  position:absolute; bottom:0; left:0; right:0; height:55%;
+  background:linear-gradient(to top, var(--black) 0%, transparent 100%);
+  z-index:1;
+}
+.hero-overlay-left {
+  position:absolute; inset:0;
+  background:linear-gradient(to right, rgba(8,8,8,0.75) 0%, transparent 65%);
+  z-index:1;
+}
+.hero-content {
+  position:relative; z-index:2;
+  padding:0 4rem 5rem;
+  max-width:780px;
+}
+.hero-eyebrow {
+  display:inline-block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem; letter-spacing:0.35em;
+  text-transform:uppercase; color:var(--orange);
+  border:1px solid rgba(245,166,35,0.35);
+  padding:0.35rem 1rem; margin-bottom:1.8rem;
+}
+.hero-name {
+  font-family:'Playfair Display',serif;
+  font-weight:900;
+  font-size:clamp(5rem,12vw,11rem);
+  line-height:0.88; letter-spacing:-0.01em;
+  color:var(--white); margin-bottom:1.2rem;
+}
+.hero-name em { color:var(--orange); font-style:normal; }
+.hero-tagline {
+  font-size:1rem; color:var(--offwhite);
+  line-height:1.75; font-weight:300;
+  font-style:italic; max-width:480px;
+  margin-bottom:2.5rem;
+}
+.hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+.btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  padding:0.85rem 2.2rem;
+  font-family:'Barlow',sans-serif;
+  font-weight:500; font-size:0.78rem;
+  letter-spacing:0.12em; text-transform:uppercase;
+  text-decoration:none; cursor:none; transition:all .25s;
+}
+.btn-fill { background:var(--orange); color:var(--black); }
+.btn-fill:hover { background:var(--orange-dim); }
+.btn-outline { border:1px solid rgba(255,255,255,0.3); color:var(--white); }
+.btn-outline:hover { border-color:var(--orange); color:var(--orange); }
+
+/* scroll cue */
+.scroll-cue {
+  position:absolute; right:4rem; bottom:3rem; z-index:2;
+  display:flex; flex-direction:column; align-items:center; gap:0.6rem;
+}
+.scroll-line { width:1px; height:50px; background:linear-gradient(to bottom,var(--orange),transparent); animation:pulse 2s infinite; }
+.scroll-txt { font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gray); writing-mode:vertical-rl; }
+@keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+/* hero stats strip */
+.hero-stats {
+  position:absolute; right:0; top:50%; transform:translateY(-50%);
+  z-index:2; display:flex; flex-direction:column;
+  border-left:1px solid var(--line);
+}
+.hero-stat {
+  padding:1.5rem 2rem; border-bottom:1px solid var(--line);
+  text-align:center;
+}
+.hero-stat-num { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--orange); line-height:1; }
+.hero-stat-label { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gray); margin-top:0.3rem; }
+
+/* ─── TICKER ─── */
+.ticker { background:var(--orange); overflow:hidden; padding:0.85rem 0; white-space:nowrap; }
+.ticker-inner { display:inline-flex; animation:tick 24s linear infinite; }
+.t-item { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--black); padding:0 2.5rem; }
+.t-dot { color:rgba(0,0,0,0.3); }
+@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ─── SECTION COMMON ─── */
+.section { padding:7rem 4rem; }
+.sec-head {
+  display:flex; align-items:baseline; gap:1.5rem;
+  margin-bottom:5rem; padding-bottom:1.5rem;
+  border-bottom:1px solid var(--line);
+}
+.sec-num { font-family:'Barlow Condensed',sans-serif; font-weight:300; font-size:0.72rem; letter-spacing:0.25em; color:var(--orange); }
+.sec-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4.5vw,3.8rem); font-weight:700; color:var(--white); line-height:1; }
+.divider { height:1px; background:var(--line); }
+
+/* ─── BIO / INTRODUCTION ─── */
+.bio-section { background:var(--dark); }
+.bio-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:6rem; align-items:start; }
+.bio-photos { position:sticky; top:100px; }
+.bio-photo-main { width:100%; aspect-ratio:3/4; overflow:hidden; }
+.bio-photo-main img { width:100%; height:100%; object-fit:cover; object-position:top; filter:saturate(0.55) brightness(0.8); transition:filter .5s; }
+.bio-photo-main:hover img { filter:saturate(0.9) brightness(0.95); }
+.bio-photo-sm { width:55%; aspect-ratio:1; overflow:hidden; margin-top:10px; margin-left:auto; }
+.bio-photo-sm img { width:100%; height:100%; object-fit:cover; object-position:top; filter:saturate(0.4) brightness(0.7); }
+.bio-content { padding-top:0.5rem; }
+.bio-label { font-family:'Barlow Condensed',sans-serif; font-weight:400; font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem; }
+.bio-heading { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:700; line-height:1.1; margin-bottom:1.5rem; }
+.bio-body { font-size:0.95rem; color:var(--offwhite); line-height:1.95; font-weight:300; margin-bottom:1.5rem; }
+.bio-quote { border-left:2px solid var(--orange); padding-left:1.5rem; font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; color:var(--orange); line-height:1.65; margin:2.5rem 0; }
+.bio-table { width:100%; border-collapse:collapse; margin-top:2.5rem; }
+.bio-table tr { border-bottom:1px solid var(--line); }
+.bio-table td { padding:0.75rem 0; font-size:0.88rem; }
+.bio-table td:first-child { color:var(--gray); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; width:38%; }
+.bio-table td:last-child { font-weight:500; color:var(--white); }
+
+/* ─── SHIVRAJKUMAR SPOTLIGHT ─── */
+.spotlight-section { background:var(--black); position:relative; overflow:hidden; }
+.ghost-bg-text {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-family:'Barlow Condensed',sans-serif; font-weight:900;
+  font-size:30vw; color:rgba(245,166,35,0.025);
+  pointer-events:none; white-space:nowrap; line-height:1; z-index:0;
+}
+.spotlight-inner { position:relative; z-index:1; display:grid; grid-template-columns:1.15fr 1fr; gap:5rem; align-items:center; }
+.spotlight-vid-col { display:flex; flex-direction:column; gap:14px; }
+.spot-vid-wrap { position:relative; aspect-ratio:16/9; overflow:hidden; cursor:none; }
+.spot-vid-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
+.spot-play-ov { position:absolute; inset:0; background:rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; transition:background .3s; }
+.spot-play-ov:hover { background:rgba(0,0,0,0.1); }
+.big-play { width:68px; height:68px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:var(--black); transition:transform .3s; cursor:none; }
+.big-play:hover { transform:scale(1.1); }
+.spot-badge { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(0,0,0,0.85),transparent); padding:2rem 1.2rem 0.8rem; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--offwhite); }
+.spot-text { }
+.spot-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--orange); margin-bottom:1rem; }
+.spot-heading { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,4.5vw,4rem); font-weight:700; line-height:1.05; margin-bottom:1.5rem; }
+.spot-heading em { color:var(--orange); font-style:italic; }
+.spot-body { font-size:0.95rem; color:var(--offwhite); line-height:1.9; font-weight:300; margin-bottom:2rem; }
+.spot-pills { display:flex; gap:0.8rem; flex-wrap:wrap; margin-bottom:2rem; }
+.pill { padding:0.4rem 1rem; font-size:0.7rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; }
+.pill-o { background:rgba(245,166,35,0.1); color:var(--orange); border:1px solid rgba(245,166,35,0.3); }
+.pill-w { background:rgba(255,255,255,0.04); color:var(--white); border:1px solid rgba(255,255,255,0.1); }
+.spot-quote { border-left:2px solid var(--orange); padding-left:1.2rem; font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:var(--orange); line-height:1.65; }
+
+/* ─── FILMS ─── */
+.films-section { background:var(--dark2); }
+.films-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); }
+.film-card { background:var(--dark2); padding:2.5rem 2rem; position:relative; overflow:hidden; cursor:none; transition:background .3s; }
+.film-card:hover { background:#1c1c1c; }
+.film-card::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--orange); transition:width .5s; }
+.film-card:hover::after { width:100%; }
+.film-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:5rem; color:rgba(245,166,35,0.06); line-height:1; margin-bottom:0.5rem; }
+.film-title { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:0.6rem; }
+.film-lang { display:inline-block; padding:0.2rem 0.8rem; border:1px solid rgba(245,166,35,0.3); font-size:0.63rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem; }
+.film-desc { font-size:0.84rem; color:var(--gray); line-height:1.7; }
+
+/* ─── REEL ─── */
+.reel-section { background:var(--dark3); }
+.reel-top { display:grid; grid-template-columns:1fr 1.6fr; gap:4rem; align-items:end; margin-bottom:3.5rem; }
+.reel-big { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(4rem,9vw,8.5rem); line-height:0.88; text-transform:uppercase; color:rgba(255,255,255,0.04); }
+.reel-tagline { font-size:0.95rem; color:var(--offwhite); line-height:1.85; font-weight:300; }
+.reel-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+.vid-wrap { position:relative; aspect-ratio:16/9; overflow:hidden; background:#111; cursor:none; }
+.vid-wrap video { width:100%; height:100%; object-fit:cover; display:block; }
+.vid-ov { position:absolute; inset:0; background:rgba(0,0,0,0.38); display:flex; align-items:center; justify-content:center; transition:background .3s; }
+.vid-wrap:hover .vid-ov { background:rgba(0,0,0,0.12); }
+.play-btn { width:54px; height:54px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; color:var(--black); transition:transform .3s; cursor:none; }
+.vid-wrap:hover .play-btn { transform:scale(1.1); }
+.vid-label { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(0,0,0,0.8),transparent); padding:1.5rem 1rem 0.7rem; font-size:0.63rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--offwhite); }
+
+/* ─── LANGUAGES ─── */
+.lang-section { background:var(--dark); }
+.lang-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+.lang-list { display:flex; flex-direction:column; gap:1.8rem; }
+.lang-row-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.5rem; }
+.lang-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.2rem; letter-spacing:0.06em; text-transform:uppercase; }
+.lang-pct { font-size:0.72rem; color:var(--orange); font-weight:500; }
+.lang-bar { height:1px; background:rgba(255,255,255,0.08); }
+.lang-fill { height:100%; background:var(--orange); }
+.lang-statement { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.8vw,3.2rem); font-weight:700; line-height:1.15; margin-bottom:1.5rem; }
+.lang-statement em { color:var(--orange); font-style:italic; }
+.lang-sub { font-size:0.93rem; color:var(--offwhite); line-height:1.85; font-weight:300; }
+
+/* ─── ACCOLADES ─── */
+.acc-section { background:var(--black); }
+.acc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); }
+.acc-card { background:var(--black); padding:2.5rem 2rem; text-align:center; transition:background .3s; cursor:none; }
+.acc-card:hover { background:#0d0d0d; }
+.acc-icon { font-size:2rem; margin-bottom:1rem; }
+.acc-award { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.05rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--white); margin-bottom:0.4rem; }
+.acc-cat { font-size:0.72rem; color:var(--orange); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.3rem; }
+.acc-sub { font-size:0.72rem; color:var(--gray); }
+
+/* ─── CONTACT ─── */
+.contact-section { background:var(--dark2); }
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:start; }
+.contact-desc { font-size:0.98rem; color:var(--offwhite); line-height:1.95; font-weight:300; margin:1.5rem 0 3rem; }
+.contact-items { display:flex; flex-direction:column; }
+.c-row { display:flex; align-items:center; gap:1.5rem; padding:1.2rem 0; border-bottom:1px solid var(--line); text-decoration:none; color:var(--white); cursor:none; transition:color .2s; }
+.c-row:hover { color:var(--orange); }
+.c-icon { width:42px; height:42px; background:rgba(245,166,35,0.07); border:1px solid rgba(245,166,35,0.2); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+.c-key { font-size:0.63rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gray); }
+.c-val { font-size:0.9rem; font-weight:500; margin-top:0.15rem; }
+.contact-photo { width:100%; aspect-ratio:3/4; overflow:hidden; }
+.contact-photo img { width:100%; height:100%; object-fit:cover; object-position:top; filter:saturate(0.5) brightness(0.75); transition:filter .5s; }
+.contact-photo:hover img { filter:saturate(0.85) brightness(0.95); }
+
+/* ─── FOOTER ─── */
+footer { padding:2rem 4rem; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--line); }
+.footer-brand { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--orange); }
+.footer-links { display:flex; gap:2rem; list-style:none; }
+.footer-links a { font-size:0.72rem; color:var(--gray); text-decoration:none; letter-spacing:0.1em; text-transform:uppercase; transition:color .2s; }
+.footer-links a:hover { color:var(--orange); }
+.footer-copy { font-size:0.7rem; color:var(--gray); }
+
+/* ─── FADE IN ─── */
+.fi { opacity:0; transform:translateY(24px); transition:opacity .75s ease, transform .75s ease; }
+.fi.vis { opacity:1; transform:none; }
+.fi-d1 { transition-delay:.1s; }
+.fi-d2 { transition-delay:.22s; }
+.fi-d3 { transition-delay:.34s; }
+
+/* ─── MOBILE ─── */
+@media (max-width:900px) {
+  nav { padding:1.1rem 1.5rem; }
+  .nav-links { display:none; }
+  .hero-content { padding:0 1.5rem 4rem; }
+  .hero-stats { display:none; }
+  .scroll-cue { right:1.5rem; }
+  .section { padding:4.5rem 1.5rem; }
+  .bio-grid,.spotlight-inner,.lang-grid,.contact-grid { grid-template-columns:1fr; gap:3rem; }
+  .bio-photos { position:static; }
+  .films-grid { grid-template-columns:1fr 1fr; }
+  .reel-grid { grid-template-columns:1fr; }
+  .reel-top { grid-template-columns:1fr; gap:1.5rem; }
+  .acc-grid { grid-template-columns:repeat(2,1fr); }
+  footer { flex-direction:column; gap:1rem; text-align:center; padding:2rem 1.5rem; }
+  .footer-links { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <a href="#" class="nav-brand">Anoop KR</a>
+  <ul class="nav-links">
+    <li><a href="#bio">Bio</a></li>
+    <li><a href="#ghost">Ghost</a></li>
+    <li><a href="#films">Films</a></li>
+    <li><a href="#reel">Reel</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://www.instagram.com/anoop_k_r_31/" target="_blank" class="nav-ig">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    @anoop_k_r_31
+  </a>
+</nav>
+
+<!-- ═══ HERO — BACKGROUND VIDEO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="media/reel1.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay-bottom"></div>
+  <div class="hero-overlay-left"></div>
+
+  <!-- right side stats panel -->
+  <div class="hero-stats fi fi-d2">
+    <div class="hero-stat">
+      <div class="hero-stat-num">6+</div>
+      <div class="hero-stat-label">Films</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">Years</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">5</div>
+      <div class="hero-stat-label">Languages</div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow fi">Actor · Mysore, Karnataka · Sandalwood</div>
+    <h1 class="hero-name fi fi-d1">ANOOP<br><em>KR</em></h1>
+    <p class="hero-tagline fi fi-d2">Crafting characters that transcend the screen — through disciplined craft, emotional depth, and cinematic realism.</p>
+    <div class="hero-btns fi fi-d3">
+      <a href="#reel" class="btn btn-fill">Watch Reel ▶</a>
+      <a href="#contact" class="btn btn-outline">Contact Me</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    <span class="scroll-txt">Scroll</span>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="t-item">Actor</span><span class="t-dot">✦</span><span class="t-item">Sandalwood</span><span class="t-dot">✦</span><span class="t-item">Ghost</span><span class="t-dot">✦</span><span class="t-item">UI</span><span class="t-dot">✦</span><span class="t-item">Firefly</span><span class="t-dot">✦</span><span class="t-item">Gowri</span><span class="t-dot">✦</span><span class="t-item">Mismatch</span><span class="t-dot">✦</span><span class="t-item">Mysore</span><span class="t-dot">✦</span><span class="t-item">6+ Films</span><span class="t-dot">✦</span><span class="t-item">Shivrajkumar</span><span class="t-dot">✦</span><span class="t-item">Kannada Cinema</span><span class="t-dot">✦</span>
+    <span class="t-item">Actor</span><span class="t-dot">✦</span><span class="t-item">Sandalwood</span><span class="t-dot">✦</span><span class="t-item">Ghost</span><span class="t-dot">✦</span><span class="t-item">UI</span><span class="t-dot">✦</span><span class="t-item">Firefly</span><span class="t-dot">✦</span><span class="t-item">Gowri</span><span class="t-dot">✦</span><span class="t-item">Mismatch</span><span class="t-dot">✦</span><span class="t-item">Mysore</span><span class="t-dot">✦</span><span class="t-item">6+ Films</span><span class="t-dot">✦</span><span class="t-item">Shivrajkumar</span><span class="t-dot">✦</span><span class="t-item">Kannada Cinema</span><span class="t-dot">✦</span>
+  </div>
+</div>
+
+<!-- ═══ INTRODUCTION / BIO ═══ -->
+<section class="section bio-section" id="bio">
+  <div class="sec-head fi">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">Introduction</h2>
+  </div>
+  <div class="bio-grid">
+    <div class="bio-photos fi">
+      <div class="bio-photo-main">
+        <img src="media/anoop2.jpg" alt="Anoop KR" />
+      </div>
+      <div class="bio-photo-sm">
+        <img src="media/anoop1.png" alt="Anoop KR" />
+      </div>
+    </div>
+    <div class="bio-content fi fi-d1">
+      <div class="bio-label">Bio</div>
+      <h3 class="bio-heading">Hello,<br>I'm Anoop.</h3>
+      <p class="bio-body">Originating from the vibrant city of Mysore, Karnataka, Anoop KR is a dedicated actor celebrated for his commitment to emotional truth and cinematic realism. Over 3 years in Kannada cinema, he has worked on 6+ films including acclaimed Sandalwood productions — growing under the guidance of legendary actors and directors.</p>
+      <blockquote class="bio-quote">Every role is a new life. Cinema, for me, is a canvas where human emotion and story converge. I bring forth the unsaid, the unseen, and the deeply felt.</blockquote>
+      <div class="bio-label" style="margin-top:2rem;">My Approach</div>
+      <p class="bio-body">With each film, I serve the story through disciplined craft, emotional depth, and cinematic realism — taking audiences on a journey that resonates deep within. Acting is not just performance; it is truth.</p>
+      <table class="bio-table">
+        <tr><td>Full Name</td><td>Anoop KR</td></tr>
+        <tr><td>Age</td><td>22</td></tr>
+        <tr><td>Height</td><td>5.8 ft</td></tr>
+        <tr><td>Weight</td><td>67 kg</td></tr>
+        <tr><td>Eye Colour</td><td>Black</td></tr>
+        <tr><td>Hair Colour</td><td>Black</td></tr>
+        <tr><td>Skin Tone</td><td>Fair</td></tr>
+        <tr><td>Nationality</td><td>Indian</td></tr>
+        <tr><td>Location</td><td>Mysore, Karnataka</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ GHOST / SHIVRAJKUMAR SPOTLIGHT ═══ -->
+<section class="section spotlight-section" id="ghost">
+  <div class="ghost-bg-text">GHOST</div>
+  <div class="sec-head fi" style="position:relative;z-index:1;">
+    <span class="sec-num">02</span>
+    <h2 class="sec-title">Featured Work</h2>
+  </div>
+  <div class="spotlight-inner">
+    <div class="spotlight-vid-col fi">
+      <div class="spot-vid-wrap">
+        <video id="sv" src="media/ghost.mp4" preload="metadata" playsinline></video>
+        <div class="spot-play-ov" id="sv-ov">
+          <div class="big-play" onclick="tvid('sv','sv-ov')">▶</div>
+        </div>
+        <div class="spot-badge">On Set · Ghost · Feat. Shivrajkumar</div>
+      </div>
+    </div>
+    <div class="spot-text fi fi-d1">
+      <div class="spot-eyebrow">At the set of</div>
+      <h3 class="spot-heading">Ghost with<br><em>Shivrajkumar</em></h3>
+      <div class="spot-pills">
+        <span class="pill pill-o">Ghost · Kannada</span>
+        <span class="pill pill-w">Shivrajkumar</span>
+        <span class="pill pill-w">Sandalwood Icon</span>
+      </div>
+      <p class="spot-body">A career-defining experience — working alongside the legendary Sandalwood icon Shivrajkumar on the sets of Ghost. Growing under the guidance of one of Indian cinema's most celebrated actors shaped everything about how Anoop approaches the craft.</p>
+      <blockquote class="spot-quote">Growing under the guidance of legendary actors and directors — a chapter that defined everything.</blockquote>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ FILMS ═══ -->
+<section class="section films-section" id="films">
+  <div class="sec-head fi">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title">Body of Work</h2>
+  </div>
+  <div class="films-grid">
+    <div class="film-card fi">
+      <div class="film-num">01</div>
+      <div class="film-title">Ghost</div>
+      <div class="film-lang">Kannada</div>
+      <div class="film-desc">Featured role in one of Sandalwood's marquee productions, working alongside legendary actor Shivrajkumar.</div>
+    </div>
+    <div class="film-card fi fi-d1">
+      <div class="film-num">02</div>
+      <div class="film-title">UI</div>
+      <div class="film-lang">Kannada</div>
+      <div class="film-desc">A compelling Kannada production adding to Anoop's growing cinematic portfolio.</div>
+    </div>
+    <div class="film-card fi fi-d2">
+      <div class="film-num">03</div>
+      <div class="film-title">Firefly</div>
+      <div class="film-lang">Kannada</div>
+      <div class="film-desc">A role demonstrating his range and commitment to authentic storytelling on screen.</div>
+    </div>
+    <div class="film-card fi">
+      <div class="film-num">04</div>
+      <div class="film-title">Gowri</div>
+      <div class="film-lang">Kannada</div>
+      <div class="film-desc">Contributing to this Kannada production, continuing to build his cinematic portfolio.</div>
+    </div>
+    <div class="film-card fi fi-d1">
+      <div class="film-num">05</div>
+      <div class="film-title">Mismatch</div>
+      <div class="film-lang">Kannada</div>
+      <div class="film-desc">A project that challenged and broadened his expressive repertoire as a performer.</div>
+    </div>
+    <div class="film-card fi fi-d2" style="background:#111;">
+      <div class="film-num" style="color:rgba(245,166,35,0.15)">06+</div>
+      <div class="film-title" style="color:var(--orange)">More Coming</div>
+      <div class="film-lang">Kannada Cinema</div>
+      <div class="film-desc" style="font-style:italic;color:rgba(255,255,255,0.2);">New projects & collaborations to be announced.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ REEL ═══ -->
+<section class="section reel-section" id="reel">
+  <div class="sec-head fi">
+    <span class="sec-num">04</span>
+    <h2 class="sec-title">Audition Reel</h2>
+  </div>
+  <div class="reel-top">
+    <div class="reel-big fi">LIGHTS<br>CAM<br>ACTION</div>
+    <p class="reel-tagline fi fi-d1">In the world of cinema, every role is a chance to inspire — from script to screen, bringing characters to life through authentic performance and raw emotional truth.</p>
+  </div>
+  <div class="reel-grid">
+    <div class="vid-wrap fi">
+      <video id="v1" src="media/reel1.mp4" preload="metadata" playsinline></video>
+      <div class="vid-ov" id="v1-ov"><div class="play-btn" onclick="tvid('v1','v1-ov')">▶</div></div>
+      <div class="vid-label">Audition Take 01</div>
+    </div>
+    <div class="vid-wrap fi fi-d1">
+      <video id="v2" src="media/reel2.mp4" preload="metadata" playsinline></video>
+      <div class="vid-ov" id="v2-ov"><div class="play-btn" onclick="tvid('v2','v2-ov')">▶</div></div>
+      <div class="vid-label">Audition Take 02</div>
+    </div>
+    <div class="vid-wrap fi">
+      <video id="v3" src="media/reel3.mp4" preload="metadata" playsinline></video>
+      <div class="vid-ov" id="v3-ov"><div class="play-btn" onclick="tvid('v3','v3-ov')">▶</div></div>
+      <div class="vid-label">Audition Take 03</div>
+    </div>
+    <div class="vid-wrap fi fi-d1">
+      <video id="v4" src="media/reel4.mp4" preload="metadata" playsinline></video>
+      <div class="vid-ov" id="v4-ov"><div class="play-btn" onclick="tvid('v4','v4-ov')">▶</div></div>
+      <div class="vid-label">Audition Take 04</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ LANGUAGES ═══ -->
+<section class="section lang-section">
+  <div class="sec-head fi">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">Languages</h2>
+  </div>
+  <div class="lang-grid">
+    <div class="fi">
+      <div class="lang-list">
+        <div><div class="lang-row-head"><span class="lang-name">Kannada</span><span class="lang-pct">100%</span></div><div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">Hindi</span><span class="lang-pct">95%</span></div><div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">English</span><span class="lang-pct">90%</span></div><div class="lang-bar"><div class="lang-fill" style="width:90%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">Telugu</span><span class="lang-pct">75%</span></div><div class="lang-bar"><div class="lang-fill" style="width:75%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">Tamil</span><span class="lang-pct">55%</span></div><div class="lang-bar"><div class="lang-fill" style="width:55%"></div></div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <h3 class="lang-statement">Serving the story in <em>every</em> language.</h3>
+      <p class="lang-sub">Through disciplined craft and emotional depth, Anoop brings authenticity to every character across languages and genres — making him a versatile performer for the multilingual landscape of Indian cinema.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ HIGHLIGHTS ═══ -->
+<section class="section acc-section">
+  <div class="sec-head fi">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title">Highlights</h2>
+  </div>
+  <div class="acc-grid">
+    <div class="acc-card fi">
+      <div class="acc-icon">🎬</div>
+      <div class="acc-award">Ghost</div>
+      <div class="acc-cat">Featured Actor</div>
+      <div class="acc-sub">w/ Shivrajkumar</div>
+    </div>
+    <div class="acc-card fi fi-d1">
+      <div class="acc-icon">🎭</div>
+      <div class="acc-award">6+ Films</div>
+      <div class="acc-cat">Kannada Cinema</div>
+      <div class="acc-sub">Sandalwood Productions</div>
+    </div>
+    <div class="acc-card fi fi-d2">
+      <div class="acc-icon">🗣️</div>
+      <div class="acc-award">5 Languages</div>
+      <div class="acc-cat">Multilingual Performer</div>
+      <div class="acc-sub">Kannada · Hindi · English · More</div>
+    </div>
+    <div class="acc-card fi fi-d3">
+      <div class="acc-icon">⭐</div>
+      <div class="acc-award">3 Years</div>
+      <div class="acc-cat">Dedicated Craft</div>
+      <div class="acc-sub">Mysore, Karnataka</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="section contact-section" id="contact">
+  <div class="sec-head fi">
+    <span class="sec-num">07</span>
+    <h2 class="sec-title">Get In Touch</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="fi">
+      <p class="contact-desc">Open for film projects, collaborations, and auditions. My commitment remains strong towards creating meaningful and innovative cinema. I am thankful for the support of directors, cast, crew, and audiences — let's create something together.</p>
+      <div class="contact-items">
+        <a href="tel:9019332263" class="c-row">
+          <div class="c-icon">📞</div>
+          <div><div class="c-key">Phone</div><div class="c-val">+91 9019332263</div></div>
+        </a>
+        <a href="mailto:anoopkr3131@gmail.com" class="c-row">
+          <div class="c-icon">✉️</div>
+          <div><div class="c-key">Email</div><div class="c-val">anoopkr3131@gmail.com</div></div>
+        </a>
+        <a href="https://www.instagram.com/anoop_k_r_31/" target="_blank" class="c-row">
+          <div class="c-icon">📷</div>
+          <div><div class="c-key">Instagram</div><div class="c-val">@anoop_k_r_31</div></div>
+        </a>
+        <div class="c-row" style="cursor:default;">
+          <div class="c-icon">📍</div>
+          <div><div class="c-key">Location</div><div class="c-val">Mysore, Karnataka</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-photo fi fi-d1">
+      <img src="media/anoop2.jpg" alt="Anoop KR" />
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-brand">Anoop KR</div>
+  <ul class="footer-links">
+    <li><a href="#bio">Bio</a></li>
+    <li><a href="#ghost">Ghost</a></li>
+    <li><a href="#films">Films</a></li>
+    <li><a href="#reel">Reel</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Anoop KR · Actor · Mysore, Karnataka</div>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+  rx+=(mx-rx)*0.14;ry+=(my-ry)*0.14;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+// Fade in
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:0.08});
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+
+// Video toggle (reel)
+function tvid(id,ovId){
+  const v=document.getElementById(id),ov=document.getElementById(ovId);
+  if(v.paused){
+    document.querySelectorAll('video:not([autoplay])').forEach(x=>x.pause());
+    document.querySelectorAll('[id$="-ov"]').forEach(x=>x.style.opacity='1');
+    v.play();ov.style.opacity='0';
+  }else{v.pause();ov.style.opacity='1';}
+}
+</script>
+</body>
+</html>
