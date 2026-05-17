@@ -215,12 +215,12 @@ nav.scrolled{background:rgba(6,6,4,0.95);backdrop-filter:blur(18px);border-botto
 /* CELEBRITIES */
 .celeb-section{background:var(--black);position:relative;overflow:hidden;}
 .celeb-section::before{content:'WITH THE STARS';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12vw;color:rgba(245,166,35,0.03);pointer-events:none;white-space:nowrap;line-height:1;z-index:0;letter-spacing:0.05em;}
-.celeb-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;position:relative;z-index:1;}
+.celeb-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;position:relative;z-index:1;}
 .celeb-card{position:relative;overflow:hidden;background:var(--dark2);cursor:none;}
 .celeb-card:hover .celeb-img img{filter:saturate(0.9) brightness(0.95);}
 .celeb-card:hover .celeb-overlay{opacity:0;}
 .celeb-img{width:100%;overflow:hidden;background:var(--dark2);}
-.celeb-img img{width:100%;height:auto;display:block;object-fit:contain;filter:saturate(0.55) brightness(0.72);transition:filter .6s;}
+.celeb-img img{width:100%;height:auto;display:block;object-fit:contain;filter:saturate(0.6) brightness(0.75);transition:filter .6s;}
 .celeb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,4,0.92) 0%,rgba(6,6,4,0.3) 50%,transparent 100%);transition:opacity .4s;pointer-events:none;}
 .celeb-info{position:absolute;bottom:0;left:0;right:0;padding:2rem 2rem 1.8rem;z-index:2;}
 .celeb-with{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--g2);margin-bottom:0.4rem;}
@@ -516,95 +516,11 @@ footer{padding:2rem 4rem;display:flex;align-items:center;justify-content:space-b
 
 <div class="divider"></div>
 
-<!-- GALLERY -->
-<section class="section gallery-section" id="gallery">
-  <div class="sec-head fi">
-    <span class="sec-num">05</span>
-    <h2 class="sec-title">Gallery</h2>
-  </div>
-  <div class="gallery-grid">
-    <div class="gal-ph fi"><img src="media/anoop1.png" alt="Anoop KR" /></div>
-    <div class="gal-ph fi fi-d1"><img src="media/anoop2.jpg" alt="Anoop KR" /></div>
-    <div class="gal-ph fi fi-d2"><img src="media/intro1.jpg" alt="Anoop KR" /></div>
-    <div class="gal-ph fi"><img src="media/intro2.jpg" alt="Anoop KR" /></div>
-    <div class="gal-ph fi fi-d1"><img src="media/intro3.jpg" alt="Anoop KR" /></div>
-    <div class="gal-ph fi fi-d2"><img src="media/ghost8.jpg" alt="Anoop KR on set" /></div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- LANGUAGES -->
-<section class="section lang-section">
-  <div class="sec-head fi">
-    <span class="sec-num">06</span>
-    <h2 class="sec-title">Languages</h2>
-  </div>
-  <div class="lang-grid">
-    <div class="fi">
-      <div class="lang-list">
-        <div><div class="lang-row-head"><span class="lang-name">Kannada</span><span class="lang-pct">100%</span></div><div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div></div>
-        <div><div class="lang-row-head"><span class="lang-name">Hindi</span><span class="lang-pct">95%</span></div><div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div></div>
-        <div><div class="lang-row-head"><span class="lang-name">English</span><span class="lang-pct">90%</span></div><div class="lang-bar"><div class="lang-fill" style="width:90%"></div></div></div>
-        <div><div class="lang-row-head"><span class="lang-name">Telugu</span><span class="lang-pct">75%</span></div><div class="lang-bar"><div class="lang-fill" style="width:75%"></div></div></div>
-        <div><div class="lang-row-head"><span class="lang-name">Tamil</span><span class="lang-pct">55%</span></div><div class="lang-bar"><div class="lang-fill" style="width:55%"></div></div></div>
-        <div><div class="lang-row-head"><span class="lang-name">Malayalam</span><span class="lang-pct">55%</span></div><div class="lang-bar"><div class="lang-fill" style="width:55%"></div></div></div>
-      </div>
-    </div>
-    <div class="fi fi-d1">
-      <h3 class="lang-statement">Serving the story in every language.</h3>
-      <p class="lang-sub">Through disciplined craft and emotional depth, Anoop brings authenticity to every character across languages and genres — a versatile performer for the multilingual landscape of Indian cinema.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- HIGHLIGHTS -->
-<section class="section acc-section">
-  <div class="sec-head fi">
-    <span class="sec-num">07</span>
-    <h2 class="sec-title">Highlights</h2>
-  </div>
-  <div class="acc-grid">
-    <div class="acc-card fi"><div class="acc-icon">🎬</div><div class="acc-award">Ghost</div><div class="acc-cat">Featured Actor</div><div class="acc-sub">w/ Shivrajkumar</div></div>
-    <div class="acc-card fi fi-d1"><div class="acc-icon">🎭</div><div class="acc-award">6+ Films</div><div class="acc-cat">Kannada Cinema</div><div class="acc-sub">Sandalwood Productions</div></div>
-    <div class="acc-card fi fi-d2"><div class="acc-icon">🗣️</div><div class="acc-award">5 Languages</div><div class="acc-cat">Multilingual Performer</div><div class="acc-sub">Kannada · Hindi · English · More</div></div>
-    <div class="acc-card fi fi-d3"><div class="acc-icon">⭐</div><div class="acc-award">3 Years</div><div class="acc-cat">Dedicated Craft</div><div class="acc-sub">Mysore, Karnataka</div></div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- CONTACT -->
-<section class="section contact-section" id="contact">
-  <div class="sec-head fi">
-    <span class="sec-num">08</span>
-    <h2 class="sec-title">Get In Touch</h2>
-  </div>
-  <div class="contact-grid">
-    <div class="fi">
-      <p class="contact-desc">Open for film projects, collaborations, and auditions. My commitment remains strong towards creating meaningful and innovative cinema. Let's create something together.</p>
-      <div class="contact-items">
-        <a href="tel:9019332263" class="c-row"><div class="c-icon">📞</div><div><div class="c-key">Phone</div><div class="c-val">+91 9019332263</div></div></a>
-        <a href="mailto:anoopkr3131@gmail.com" class="c-row"><div class="c-icon">✉️</div><div><div class="c-key">Email</div><div class="c-val">anoopkr3131@gmail.com</div></div></a>
-        <a href="https://www.instagram.com/anoop_k_r_31/" target="_blank" class="c-row"><div class="c-icon">📷</div><div><div class="c-key">Instagram</div><div class="c-val">@anoop_k_r_31</div></div></a>
-        <div class="c-row" style="cursor:default;"><div class="c-icon">📍</div><div><div class="c-key">Location</div><div class="c-val">Mysore, Karnataka</div></div></div>
-      </div>
-    </div>
-    <div class="contact-photo fi fi-d1">
-      <img src="media/intro2.jpg" alt="Anoop KR" />
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
 <!-- CELEBRITIES -->
 <section class="section celeb-section" id="celebrities">
   <div class="sec-head fi" style="position:relative;z-index:1;">
-    <span class="sec-num">09</span>
-    <h2 class="sec-title">Celebrity Encounters</h2>
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">Celebrity Time</h2>
   </div>
   <div class="celeb-grid">
 
@@ -636,8 +552,120 @@ footer{padding:2rem 4rem;display:flex;align-items:center;justify-content:space-b
       </div>
     </div>
 
+    <!-- Card 3 -->
+    <div class="celeb-card fi fi-d1">
+      <div class="celeb-img">
+        <img src="media/celeb3.jpg" alt="Anoop KR with celebrity" />
+      </div>
+      <div class="celeb-overlay"></div>
+      <div class="celeb-info">
+        <div class="celeb-with">With</div>
+        <div class="celeb-name">P. Vasu</div>
+        <div class="celeb-desc">Celebrated Kannada Director</div>
+        <div class="celeb-badge">⭐ Sandalwood Director</div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="celeb-card fi fi-d2">
+      <div class="celeb-img">
+        <img src="media/celeb4.jpg" alt="Anoop KR with celebrity" />
+      </div>
+      <div class="celeb-overlay"></div>
+      <div class="celeb-info">
+        <div class="celeb-with">With</div>
+        <div class="celeb-name">Industry<br>Star</div>
+        <div class="celeb-desc">Indian Cinema Personality</div>
+        <div class="celeb-badge">⭐ Cinema Industry</div>
+      </div>
+    </div>
+
   </div>
 </section>
+<div class="divider"></div>
+
+<!-- GALLERY -->
+<section class="section gallery-section" id="gallery">
+  <div class="sec-head fi">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title">Gallery</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gal-ph fi"><img src="media/anoop1.png" alt="Anoop KR" /></div>
+    <div class="gal-ph fi fi-d1"><img src="media/anoop2.jpg" alt="Anoop KR" /></div>
+    <div class="gal-ph fi fi-d2"><img src="media/intro1.jpg" alt="Anoop KR" /></div>
+    <div class="gal-ph fi"><img src="media/intro2.jpg" alt="Anoop KR" /></div>
+    <div class="gal-ph fi fi-d1"><img src="media/intro3.jpg" alt="Anoop KR" /></div>
+    <div class="gal-ph fi fi-d2"><img src="media/ghost8.jpg" alt="Anoop KR on set" /></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LANGUAGES -->
+<section class="section lang-section">
+  <div class="sec-head fi">
+    <span class="sec-num">07</span>
+    <h2 class="sec-title">Languages</h2>
+  </div>
+  <div class="lang-grid">
+    <div class="fi">
+      <div class="lang-list">
+        <div><div class="lang-row-head"><span class="lang-name">Kannada</span><span class="lang-pct">100%</span></div><div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">Hindi</span><span class="lang-pct">95%</span></div><div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">English</span><span class="lang-pct">90%</span></div><div class="lang-bar"><div class="lang-fill" style="width:90%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">Telugu</span><span class="lang-pct">75%</span></div><div class="lang-bar"><div class="lang-fill" style="width:75%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">Tamil</span><span class="lang-pct">55%</span></div><div class="lang-bar"><div class="lang-fill" style="width:55%"></div></div></div>
+        <div><div class="lang-row-head"><span class="lang-name">Malayalam</span><span class="lang-pct">55%</span></div><div class="lang-bar"><div class="lang-fill" style="width:55%"></div></div></div>
+      </div>
+    </div>
+    <div class="fi fi-d1">
+      <h3 class="lang-statement">Serving the story in every language.</h3>
+      <p class="lang-sub">Through disciplined craft and emotional depth, Anoop brings authenticity to every character across languages and genres — a versatile performer for the multilingual landscape of Indian cinema.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HIGHLIGHTS -->
+<section class="section acc-section">
+  <div class="sec-head fi">
+    <span class="sec-num">08</span>
+    <h2 class="sec-title">Highlights</h2>
+  </div>
+  <div class="acc-grid">
+    <div class="acc-card fi"><div class="acc-icon">🎬</div><div class="acc-award">Ghost</div><div class="acc-cat">Featured Actor</div><div class="acc-sub">w/ Shivrajkumar</div></div>
+    <div class="acc-card fi fi-d1"><div class="acc-icon">🎭</div><div class="acc-award">6+ Films</div><div class="acc-cat">Kannada Cinema</div><div class="acc-sub">Sandalwood Productions</div></div>
+    <div class="acc-card fi fi-d2"><div class="acc-icon">🗣️</div><div class="acc-award">5 Languages</div><div class="acc-cat">Multilingual Performer</div><div class="acc-sub">Kannada · Hindi · English · More</div></div>
+    <div class="acc-card fi fi-d3"><div class="acc-icon">⭐</div><div class="acc-award">3 Years</div><div class="acc-cat">Dedicated Craft</div><div class="acc-sub">Mysore, Karnataka</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="sec-head fi">
+    <span class="sec-num">09</span>
+    <h2 class="sec-title">Get In Touch</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="fi">
+      <p class="contact-desc">Open for film projects, collaborations, and auditions. My commitment remains strong towards creating meaningful and innovative cinema. Let's create something together.</p>
+      <div class="contact-items">
+        <a href="tel:9019332263" class="c-row"><div class="c-icon">📞</div><div><div class="c-key">Phone</div><div class="c-val">+91 9019332263</div></div></a>
+        <a href="mailto:anoopkr3131@gmail.com" class="c-row"><div class="c-icon">✉️</div><div><div class="c-key">Email</div><div class="c-val">anoopkr3131@gmail.com</div></div></a>
+        <a href="https://www.instagram.com/anoop_k_r_31/" target="_blank" class="c-row"><div class="c-icon">📷</div><div><div class="c-key">Instagram</div><div class="c-val">@anoop_k_r_31</div></div></a>
+        <div class="c-row" style="cursor:default;"><div class="c-icon">📍</div><div><div class="c-key">Location</div><div class="c-val">Mysore, Karnataka</div></div></div>
+      </div>
+    </div>
+    <div class="contact-photo fi fi-d1">
+      <img src="media/intro2.jpg" alt="Anoop KR" />
+    </div>
+  </div>
+</section>
+
 
 <!-- FOOTER -->
 <footer>
